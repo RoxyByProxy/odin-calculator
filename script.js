@@ -16,10 +16,9 @@ const display = document.querySelector('#display');
 const buttons = document.querySelectorAll('button');
 
 //initalize variables I'll need later
-let current = null;
-let alpha = null;
-let op = null;
-let beta = null;
+let alpha = '';
+let op = '';
+let beta = '';
 
 //start of mathematical functions
 //a and b will be used for first and second args throughout for consistancy
@@ -41,6 +40,8 @@ function divide(a, b) {
 
 //this is the heavy-lifter function for the rest of the program
 function operate(a, operator, b) {
+    a = parseInt(a);
+    b = parseInt(b);
     switch (operator) {
         case '+':
             return add(a, b);
@@ -61,9 +62,9 @@ function populate(input) {
     //checks for special cases
     if (input === 'C') {
         //resets all values to default
-        alpha = null;
-        op = null;
-        beta = null;
+        alpha = '';
+        op = '';
+        beta = '';
         return;
     }
     else if (input === '=') {
@@ -71,22 +72,22 @@ function populate(input) {
         const result = operate(alpha, op, beta);
         //then sets alpha to the result and restores other values to default
         alpha = result;
-        op = null;
-        beta = null;
+        op = '';
+        beta = '';
         //displays result and breaks
         display.textContent = result;
         return;
     }
     //otherwise performs normal operations
     else {
-        if (op === null) {
-            alpha += input;
-            display.textContent = alpha;
-            return;
-        }
-        else if (input === '+' || input === '-' || input === '*' || input === '/') {
+        if (input === '+' || input === '-' || input === '*' || input === '/') {
             op = input;
             display.textContent = op;
+            return;
+        }
+        else if (op === '') {
+            alpha += input;
+            display.textContent = alpha;
             return;
         }
         else {
@@ -98,8 +99,8 @@ function populate(input) {
 }
 
 //adding event listeners to buttons
-for(let button in buttons) {
+buttons.forEach((button) => {
     button.addEventListener('click', () => {
         populate(button.textContent);
     })
-}
+})
