@@ -192,9 +192,25 @@ function populate(input) {
     }
 }
 
+//captures and parses keypresses, pipes result to populate()
+function recognizeKey(key) {
+    //targets button from key info
+    const target = document.querySelector(`button[data-key="${key.keyCode}"]`);
+    //catches illegal keys
+    if (!target) {
+        console.log(`Error: keycode not recognized, tried to target: ${key} found: ${target}`);
+        return;
+    }
+    //pipes successful targeting to populate()
+    populate(target.textContent);
+}
+
 //adding event listeners to buttons
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
         populate(button.textContent);
     })
 })
+//add event listeners for keycodes
+window.addEventListener('keydown', recognizeKey);
+//add event listeners for alternate keycodes
