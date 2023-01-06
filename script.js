@@ -74,6 +74,11 @@ function populate(input) {
         return;
     }
     else if (input === '=') {
+        //confirms all inputs valid
+        if (alpha === '' || beta === '' || op === '' || op === 'hold') {
+            console.log(`Error: Insufficient data to perform operation, Input was: ${input} first operand: ${alpha} second operand: ${beta} operator ${op}.`)
+            return;
+        }
         //performs operation
         const result = operate(alpha, op, beta);
         //checks for divide by 0 errors
@@ -99,6 +104,13 @@ function populate(input) {
             //if another operation is incomplete, perform it first
              if (op === '+' || op === '-' || op === '*' || op === '/') {
                 //below code directly from = case in previous code consult comments there
+                if (alpha === '' || beta === '') {
+                    //this time this case allows overwriting of the current operator instead of simply waiting for correct input as with case '='
+                    console.log(`Error: Insufficient data to perform operation, Input was: ${input} first operand: ${alpha} second operand: ${beta} operator ${op}. Setting operator to input`)
+                    op = input;
+                    display.textContent = input;
+                    return;
+                }
                 const result = operate(alpha, op, beta);
                 if (result === 'No!') {
                     alpha = '';
