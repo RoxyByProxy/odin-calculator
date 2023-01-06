@@ -194,12 +194,27 @@ function populate(input) {
 
 //captures and parses keypresses, pipes result to populate()
 function recognizeKey(key) {
-    //targets button from key info
-    const target = document.querySelector(`button[data-key="${key.keyCode}"]`);
-    //catches illegal keys
+    //targets button from key info targeting numpad
+    let target = document.querySelector(`button[data-key="${key.keyCode}"]`);
+    //catches illegal keys and checks for valid alt keys
     if (!target) {
-        console.log(`Error: keycode not recognized, tried to target: ${key} found: ${target}`);
-        return;
+        //checks for shift keys
+        if (key.shiftKey) {
+            target = document.querySelector(`button[data-modKey="${key.keyCode}"]`);
+            if (!target) {
+                console.log(`Error: keycode not recognized, and shift was recognized tried to target: ${key} found: ${target}`);
+                return;
+            }
+            //if valid target pipes to populate()
+            populate(target.textContent);
+            return;
+        }
+        //checks for alternate keys after numpad and shift
+        target = document.querySelector(`button[data-altKey="${key.keyCode}"]`);
+        if (!target) {
+            console.log(`Error: keycode not recognized, tried to target: ${key} found: ${target}`);
+            return;
+        }
     }
     //pipes successful targeting to populate()
     populate(target.textContent);
@@ -213,4 +228,3 @@ buttons.forEach((button) => {
 })
 //add event listeners for keycodes
 window.addEventListener('keydown', recognizeKey);
-//add event listeners for alternate keycodes
