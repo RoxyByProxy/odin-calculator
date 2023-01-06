@@ -72,7 +72,7 @@ function populate(input) {
         const result = operate(alpha, op, beta);
         //then sets alpha to the result and restores other values to default
         alpha = result;
-        op = '';
+        op = 'hold';
         beta = '';
         //displays result and breaks
         display.textContent = result;
