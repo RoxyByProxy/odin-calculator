@@ -83,6 +83,16 @@ function populate(input) {
     else {
         //first handles operators
         if (input === '+' || input === '-' || input === '*' || input === '/') {
+            //if another operation is incomplete, perform it first
+             if (op === '+' || op === '-' || op === '*' || op === '/') {
+                const result = operate(alpha, op, beta);
+                alpha = result;
+                op = input;
+                beta = '';
+                display.textContent = result;
+                return;
+             }
+             //else save new operator
             op = input;
             display.textContent = op;
             return;
