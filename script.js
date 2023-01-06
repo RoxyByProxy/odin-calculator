@@ -23,15 +23,15 @@ let beta = '';
 //start of mathematical functions
 //a and b will be used for first and second args throughout for consistancy
 function add(a, b) {
-    return a + b;
+    return Math.floor((a + b) * 10) / 10;
 }
 
 function subtract(a, b) {
-    return a - b;
+    return Math.floor((a - b) * 10) / 10;
 }
 
 function multiply(a, b) {
-    return a * b;
+    return Math.floor((a * b) * 10) / 10;
 }
 
 function divide(a, b) {
@@ -39,6 +39,7 @@ function divide(a, b) {
     if (b === 0) {
         return 'No!'
     }
+    console.log(Math.floor((a / b) * 10) / 10);
     return Math.floor((a / b) * 10) / 10;
 }
 
@@ -96,6 +97,38 @@ function populate(input) {
         //displays result and breaks
         display.textContent = result;
         return;
+    }
+    else if (input === 'Backspace') {
+        //undoes last character entered
+        if (op === 'hold') {
+            //checks if the last action was an operation
+            console.log('Error: cannot backspace an equals operation');
+            return;
+        }
+        else if (beta != '') {
+            //checks if the backspace is for the second operand
+            beta = beta.slice(0, -1);
+            display.textContent = beta;
+            return;
+        }
+        else if (op != '') {
+            //checks if the backspace is for the operator
+            //this functionality is redundant with how overwriting operators works but makes intuitive sense
+            op = ''
+            display.textContent = alpha;
+            return;
+        }
+        else if (alpha != '') {
+            //checks if the backspace is for the first operand
+            alpha = alpha.slice(0, -1);
+            display.textContent = alpha;
+            return;
+        }
+        else {
+            //returns if nothing can be identified to delete
+            console.log('Error: Cannot find anything to delete');
+            return;
+        }
     }
     //otherwise performs normal operations
     else {
