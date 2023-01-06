@@ -35,6 +35,10 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+    //handles divide by 0 errors
+    if (b === 0) {
+        return 'No!'
+    }
     return Math.floor((a / b) * 10) / 10;
 }
 
@@ -57,7 +61,8 @@ function operate(a, operator, b) {
     }
 }
 
-//populates the display when numbers are pressed
+//populates the display when buttons are pressed
+//most convoluted thing in this program by far
 function populate(input) {
     //checks for special cases
     if (input === 'C') {
@@ -71,6 +76,14 @@ function populate(input) {
     else if (input === '=') {
         //performs operation
         const result = operate(alpha, op, beta);
+        //checks for divide by 0 errors
+        if (result === 'No!') {
+            alpha = '';
+            op = '';
+            beta = '';
+            display.textContent = result;
+            return;
+        }
         //then sets alpha to the result and restores other values to default
         alpha = result;
         op = 'hold';
@@ -85,7 +98,15 @@ function populate(input) {
         if (input === '+' || input === '-' || input === '*' || input === '/') {
             //if another operation is incomplete, perform it first
              if (op === '+' || op === '-' || op === '*' || op === '/') {
+                //below code directly from = case in previous code consult comments there
                 const result = operate(alpha, op, beta);
+                if (result === 'No!') {
+                    alpha = '';
+                    op = '';
+                    beta = '';
+                    display.textContent = result;
+                    return;
+                }
                 alpha = result;
                 op = input;
                 beta = '';
