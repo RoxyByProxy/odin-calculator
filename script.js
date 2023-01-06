@@ -132,6 +132,10 @@ function populate(input) {
         }
         //then handles initial input of first operand
         else if (op === '') {
+            //catches illegal decimal points
+            if (input === '.' && display.textContent.includes('.')) {
+                return;
+            }
             alpha += input;
             display.textContent = alpha;
             return;
@@ -145,6 +149,9 @@ function populate(input) {
         }
         //finally assigns content to second operand
         else {
+            if (input === '.' && display.textContent.includes('.')) {
+                return;
+            }
             beta += input;
             display.textContent = beta;
             return;
