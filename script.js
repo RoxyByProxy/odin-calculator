@@ -65,6 +65,7 @@ function populate(input) {
         alpha = '';
         op = '';
         beta = '';
+        display.textContent = '';
         return;
     }
     else if (input === '=') {
@@ -80,16 +81,26 @@ function populate(input) {
     }
     //otherwise performs normal operations
     else {
+        //first handles operators
         if (input === '+' || input === '-' || input === '*' || input === '/') {
             op = input;
             display.textContent = op;
             return;
         }
+        //then handles initial input of first operand
         else if (op === '') {
             alpha += input;
             display.textContent = alpha;
             return;
         }
+        //checks for special case resetting first operand without clearing data
+        else if (op === 'hold') {
+            alpha = input;
+            op = '';
+            display.textContent = alpha;
+            return;
+        }
+        //finally assigns content to second operand
         else {
             beta += input;
             display.textContent = beta;
