@@ -1,1 +1,28 @@
 /*ec.2 create css styling*/
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    padding: 25px;
+    border-radius: 12px;
+}
+
+.row {
+    display: flex;
+    margin: auto;
+}
+
+.functional {
+    background-color: lightcoral;
+}
+
+.num {
+    background-color: lightskyblue;
+}
+
+.displayContainer {
+    margin: auto;
+    margin-top: 100px;
+}
